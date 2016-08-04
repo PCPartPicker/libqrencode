@@ -103,8 +103,8 @@ static int RSblock_init(RSblock *blocks, int spec[5], unsigned char *data, unsig
 	return 0;
 }
 
-__STATIC void QRraw_free(QRRawCode *raw);
-__STATIC QRRawCode *QRraw_new(QRinput *input)
+void QRraw_free(QRRawCode *raw);
+QRRawCode *QRraw_new(QRinput *input)
 {
 	QRRawCode *raw;
 	int spec[5], ret;
@@ -154,7 +154,7 @@ __STATIC QRRawCode *QRraw_new(QRinput *input)
  * @param raw raw code.
  * @return code
  */
-__STATIC unsigned char QRraw_getCode(QRRawCode *raw)
+unsigned char QRraw_getCode(QRRawCode *raw)
 {
 	int col, row;
 	unsigned char ret;
@@ -177,7 +177,7 @@ __STATIC unsigned char QRraw_getCode(QRRawCode *raw)
 	return ret;
 }
 
-__STATIC void QRraw_free(QRRawCode *raw)
+void QRraw_free(QRRawCode *raw)
 {
 	if(raw != NULL) {
 		free(raw->datacode);
@@ -202,8 +202,8 @@ typedef struct {
 	int count;
 } MQRRawCode;
 
-__STATIC void MQRraw_free(MQRRawCode *raw);
-__STATIC MQRRawCode *MQRraw_new(QRinput *input)
+void MQRraw_free(MQRRawCode *raw);
+MQRRawCode *MQRraw_new(QRinput *input)
 {
 	MQRRawCode *raw;
 
@@ -245,7 +245,7 @@ __STATIC MQRRawCode *MQRraw_new(QRinput *input)
  * @param raw raw code.
  * @return code
  */
-__STATIC unsigned char MQRraw_getCode(MQRRawCode *raw)
+unsigned char MQRraw_getCode(MQRRawCode *raw)
 {
 	unsigned char ret;
 
@@ -260,7 +260,7 @@ __STATIC unsigned char MQRraw_getCode(MQRRawCode *raw)
 	return ret;
 }
 
-__STATIC void MQRraw_free(MQRRawCode *raw)
+void MQRraw_free(MQRRawCode *raw)
 {
 	if(raw != NULL) {
 		free(raw->datacode);
@@ -408,7 +408,7 @@ extern unsigned char *FrameFiller_testMQR(int version)
  * QR-code encoding
  *****************************************************************************/
 
-__STATIC QRcode *QRcode_new(int version, int width, unsigned char *data)
+QRcode *QRcode_new(int version, int width, unsigned char *data)
 {
 	QRcode *qrcode;
 
@@ -430,7 +430,7 @@ void QRcode_free(QRcode *qrcode)
 	}
 }
 
-__STATIC QRcode *QRcode_encodeMask(QRinput *input, int mask)
+QRcode *QRcode_encodeMask(QRinput *input, int mask)
 {
 	int width, version;
 	QRRawCode *raw;
@@ -508,7 +508,7 @@ EXIT:
 	return qrcode;
 }
 
-__STATIC QRcode *QRcode_encodeMaskMQR(QRinput *input, int mask)
+QRcode *QRcode_encodeMaskMQR(QRinput *input, int mask)
 {
 	int width, version;
 	MQRRawCode *raw;
@@ -859,26 +859,4 @@ QRcode_List *QRcode_encodeStringStructured(const char *string, int version, QRec
 		return NULL;
 	}
 	return QRcode_encodeDataStructuredReal(strlen(string), (unsigned char *)string, version, level, 0, hint, casesensitive);
-}
-
-/******************************************************************************
- * System utilities
- *****************************************************************************/
-
-void QRcode_APIVersion(int *major_version, int *minor_version, int *micro_version)
-{
-	if(major_version != NULL) {
-		*major_version = MAJOR_VERSION;
-	}
-	if(minor_version != NULL) {
-		*minor_version = MINOR_VERSION;
-	}
-	if(micro_version != NULL) {
-		*micro_version = MICRO_VERSION;
-	}
-}
-
-char *QRcode_APIVersionString(void)
-{
-	return VERSION;
 }
