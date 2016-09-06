@@ -487,7 +487,7 @@ QRcode *QRcode_encodeMask(QRinput *input, int mask)
 
     if (mask == -1)
     {
-        mask == 0; //nick.neumann.now - just trying for performance purposes
+        mask = 0; //nick.neumann.now - just trying for performance purposes
     }
 	/* masking */
 	if(mask == -2) { // just for debug purpose
