@@ -485,6 +485,10 @@ QRcode *QRcode_encodeMask(QRinput *input, int mask)
 		*p = 0x02;
 	}
 
+    if (mask == -1)
+    {
+        mask == 0; //nick.neumann.now - just trying for performance purposes
+    }
 	/* masking */
 	if(mask == -2) { // just for debug purpose
 		masked = (unsigned char *)malloc(width * width);
